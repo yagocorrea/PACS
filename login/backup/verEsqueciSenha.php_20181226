@@ -1,0 +1,63 @@
+<?php
+session_start();
+ob_start();
+
+$alterarSenha = $_POST["email"];
+
+if ($alterarSenha == null) {
+    $msg = "Por favor, informe o e-mail!";
+    header("location:./password?msg=" . $msg);
+	   
+} else {
+	include '../app/config/conn.php';
+}
+if (isset($_POST["email"])){
+		
+		$email = mysql_real_escape_string($_POST["email"]);
+	
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			echo $erro[] = "E-mail inválido";
+		}
+		echo "estou aqui";
+		$sql = "select 
+                * 
+            from operador";
+			//var_dump($sql);
+			//var_dump($con);
+
+		$result = mysql_query($sql, $con);
+		$row = mysql_fetch_assoc($result);
+		//var_dump($row);
+		
+		if (mysql_num_rows($result) == 1) {
+			$row = mysql_fetch_array($result);
+			$_SESSION["id"] = $row["idoperador"];
+			$_SESSION["nome"] = $row["nome"];
+			$_SESSION["login"] = $row["login"];
+			$_SESSION["email"] = $row["email"];
+			$_SESSION["ativo"] = $row["ativo"];
+			$_SESSION["tempo"] = time();
+		
+		if($result == 0){
+		echo $erro[] = "O e-mail informado não existe em nossa base";
+		echo "passou da consulta";
+		}
+		
+		
+		if(count($erro) == 0 && $result > 0){
+		
+			$novaSenha = substr(md5(time()), 0, 6); // Envia e-mail para o úsuario 
+			$novaSenhaBD = md5(md5($novaSenha)); // Muda senha no banco de dados
+			
+			echo "antes de trocar a senha";
+			if(mail($email, "Sua nova senha", "Sua nova senha: " .$novaSenha)){
+			
+				$sql_code = "UPDATE operador SET senha = '$novaSenhaBD' WHERE email = '$email' ";
+				$sql = $mysql->query($sql_code) or die($mysql->error);
+				
+			}
+		}
+		
+	}
+}	
+?>

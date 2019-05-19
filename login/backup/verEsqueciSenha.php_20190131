@@ -1,0 +1,60 @@
+<?php
+session_start();
+ob_start();
+
+$alterarSenha = $_POST["email"];
+
+if ($alterarSenha == null) {
+    $msg = "Por favor, informe o e-mail!";
+    header("location:./password?msg=" . $msg);
+	   
+} else {
+	include '../app/config/conn.php';
+}
+if (isset($_POST["email"])){
+		
+		$email = mysql_real_escape_string($_POST["email"]);
+	
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			$msg = "E-mail inválido";
+			header("location:./password?msg=" . $msg);
+			return;
+		}
+		//echo "estou aqui";
+		$sql = "select 
+		* 
+		from operador 
+		where email = '" . $email . "'  
+		AND ativo = 's'";
+			//var_dump($sql);
+			//var_dump($con);
+
+		$result = mysql_query($sql, $con);
+		if (mysql_num_rows($result) == 0) {
+			$row = mysql_fetch_array($result);
+
+			//echo $erro[] = "O e-mail informado não existe em nossa base";
+			$msg = "O e-mail informado não existe em nossa base";
+			header("location:./password?msg=" . $msg);
+			return;
+			
+		}else{
+		
+			$novaSenha = substr(md5(time()), 0, 6); // Envia e-mail para o úsuario 
+			//$novaSenhaBD = md5(md5($novaSenha)); // Muda senha no banco de dados
+			
+			
+			if(mail($email, "Sua nova senha", "Sua nova senha: " .$novaSenha)){
+			
+				$sql_code = "UPDATE operador SET senha = '$novaSenha' WHERE email = '$email' ";
+				$msg = "A nova senha foi enviada para o seu e-mail. <a href='index'> Clique aqui para logar com a nova senha</a> ";
+				header("location:./password?msg=" . $msg);
+				return (mysql_query($sql_code, $con));
+				//var_dump($sql);
+				
+			}
+			
+
+		}
+	}	
+?>

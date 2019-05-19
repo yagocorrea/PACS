@@ -1,0 +1,12 @@
+<?php
+define('NOME_EMPRESA', ' SizeOf - ERP');
+define('TITLE', ' SizeOf - ERP');
+define('ALT', 'SizeOf');
+define('EMAIL_LOGIN', '@sarton.sizeof.com.br');
+define('BASE_ICO', 'https://sizeof.com.br/sizeRP/rb/assets/images/logo-size.png');
+define('URLPADRAO', 'https://sizeof.com.br/sizeRP/rb/app');
+define('URLCSSJS', 'https://sizeof.com.br/sizeRP/rb');
+define('INDEX', 'https://sizeof.com.br/sizeRP/rb');
+
+
+ob_start();

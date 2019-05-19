@@ -1,0 +1,65 @@
+<?php
+session_start();
+ob_start();
+
+@$alterarSenha = $_POST["email"];
+
+if ($alterarSenha == null) {
+    $msg = "Por favor, informe o login!";
+    header("location:./password?msg=" . $msg);
+	   
+} else {
+	include '../app/config/conn.php';
+}
+if (isset($_POST["email"])){
+	
+		$email = $mysqli->escape_string($_POST["email"]);
+		
+		if(!filter_var($email, FILTER_VALIDADE_EMAIL)){
+			$erro[] = "E-mail inválido";
+		}
+		
+		$sql = "select 
+                * 
+            from operador 
+            where login = '" . $login . "' 
+            AND senha = '" . $senha . "' 
+            AND ativo = 's'";
+
+		$result = mysql_query($sql, $con);
+		if (mysql_num_rows($result) == 1) {
+			$row = mysql_fetch_array($result);
+			$_SESSION["id"] = $row["idoperador"];
+			$_SESSION["nome"] = $row["nome"];
+			$_SESSION["login"] = $row["login"];
+			$_SESSION["email"] = $row["email"];
+			$_SESSION["ativo"] = $row["ativo"];
+			$_SESSION["tempo"] = time();
+		
+		if($result == 0){
+			$erro[] = "O e-mail informado não existe em nossa base";
+		}
+		
+		
+		if(count($erro) == 0 && $result > 0){
+		
+			$novaSenha = substr(md5(time()), 0, 6); // Envia e-mail para o úsuario 
+			$novaSenhaBD = md5(md5($novaSenha)); // Muda senha no banco de dados
+			
+			
+			if(mail($email, "Sua nova senha", "Sua nova senha: " .$novaSenha)){
+			
+				$sql_code = "UPDATE wp_users SET user_pass = '$novaSenhaBD' WHERE user_email = '$email' "
+				$sql = $mysql->query($sql_code) or die($mysql->error);
+			}
+		}
+		
+	}
+	echo substr(md5(time()), 0, 6); 
+?>
+
+<?php if(count($erro) > 0)
+		foreach($erro as $msg){
+			echo "<p>$msg<p>"
+		}
+?>
