@@ -133,69 +133,8 @@
                                     header("location:./inf?msg=" . $msg);
                                 }
                             } else {
-                                include '../PHPMailer/src/PHPMailer.php';         
-                                $emailRemetente = "naoresponder@sizeof.com.br";
-                                $nome = "PACS";
-                                $assunto = utf8_decode("Primeiro Acesso - PACS");
-                                $corpo = nl2br("
-                                    Olá {$nome}, seu cadastro foi efetuado na PACS!
-
-                                    ----------------------------------------------------
-                                    Segue dados de acesso:
-
-                                    Login: <b>{$login}</b>
-                                    senha: <b>{$password}</b>    
-
-                                    Link: <a href='//localhost/pacs/login/' target='_blank'>Acessar minha conta</a>
-                                    ----------------------------------------------------
-
-                                    <i>
-                                    Obs.: Por razões de segurança, por favor, altere sua senha após o login. 
-                                    Att: PACS - Portal de Atendimento
-                                    </i>
-                                    <img src='https://reidigital.com.br/pacs/assets/img/pacs-logo.png' width='100'>   
-                                    
-                                    <b>e-mail automático. por favor, não o responda!</b>        
-
-                                    ");
-                                $corpo = utf8_decode($corpo);
-                                $PHPMailer = new PHPMailer();
-                                $PHPMailer->IsSMTP();
-                                $PHPMailer->isHTML(true);
-                                $PHPMailer->allow_charset_conversion = true;                               
-                                $PHPMailer->Charset = 'UTF-8';
-                                $PHPMailer->Host = 'mail.sizeof.com.br';                                
-                                $PHPMailer->SMTPDebug = 0;
-                                $PHPMailer->Port = 587;                               
-                                $PHPMailer->Username = $emailRemetente;                               
-                                $PHPMailer->From = $emailRemetente;                               
-                                $PHPMailer->FromName = $nome; //$nome;                               
-                                $PHPMailer->Subject = $assunto;                              
-                                $mensagem = "
-                                        <html>
-                                            <head>
-                                                <meta charset='utf-8'>
-                                                <title>Senha alterada</title>
-                                            </head>
-                                            <body>
-                                                {$corpo}            
-                                            </body>
-                                        </html>";
-                                $PHPMailer->MsgHTML(utf8_decode($mensagem));
-                                $PHPMailer->Body = $mensagem;
-                                $PHPMailer->AltBody = $corpo;
-                                //$email = $email; -> já tem lá em cima
-                                $PHPMailer->AddAddress($email);
-                                if ($PHPMailer->Send()) {
-                                    //Cliente Cadastrado com sucesso
-                                    $msg = "Cliente cadastrado com sucesso!";
-                                    header("location:./inf?msg=" . $msg);
-                                } else {
-                                    //echo 'Erro do PHPMailer: ' . $PHPMailer->ErrorInfo;
-                                    $msg = "Cliente cadastrado com sucesso! Porém, ocorreu um erro ao enviar email com os dados de acesso!";
-                                    header("location:./inf?msg=" . $msg);
-                                }
-                                
+                                $msg = "Cliente cadastrado com sucesso!";
+                                header("location:./inf?msg=" . $msg);
                             }
                         } else {
                             //esse endereço já existe
