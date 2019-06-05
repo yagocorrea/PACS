@@ -16,10 +16,11 @@
 					<!--<span class="nav-label label label-danger">9</span> -->
 				</a>
 				<ul aria-expanded="false">
-					<li> <a href='cadastro/cCliente'>Cadastrar Clientes</a> </li>
-					<li> <a href='cadastro/cFuncionario'>Cadastrar Funcionários</a> </li>
-					<li> <a href='cadastro/cServico'>Cadastrar Serviços</a> </li>
-					<li> <a href='cadastro/cProduto'>Cadastrar Produtos</a> </li>                                    
+					<li> <a href='../app/cadastro/cAdministrador'>Cadastrar Administrador</a> </li>
+					<li> <a href='../app/cadastro/cCliente'>Cadastrar Clientes</a> </li>
+					<li> <a href='../app/cadastro/cFuncionario'>Cadastrar Funcionários</a> </li>
+					<li> <a href='../app/cadastro/cServico'>Cadastrar Serviços</a> </li>
+					<li> <a href='../app/cadastro/cProduto'>Cadastrar Produtos</a> </li>                                    
 				</ul>
 			</li>                           
 			<li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="nav-icon ti ti-calendar"></i><span class="nav-title">Agendamento</span></a>

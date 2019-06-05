@@ -1,14 +1,13 @@
-﻿<?php include_once './config/const.php'; ?>
+﻿<?php include_once '../config/const.php'; ?>
  
 <!doctype html>
 <html lang="pt-br">
 
 <head>
-    <title><?= TITLE ?> - Cadastro de Clientes</title>
+    <title><?= TITLE ?> - Cadastro de Produtos</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
-    <meta name="author" content="Potenza Global Solutions" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- app favicon -->
     <link rel="shortcut icon" href="<?= BASE_ICO ?>">
@@ -48,7 +47,7 @@
                     <!-- begin navbar-header -->
                     <div class="navbar-header d-flex align-items-center">
                         <a href="javascript:void:(0)" class="mobile-toggle"><i class="ti ti-align-right"></i></a>
-                        <a class="navbar-brand" href="../index.php">
+                        <a class="navbar-brand" href="index.html">
                             <img src="//www.reidigital.com.br/pacs/assets/img/pacs-logo.png" class="img-fluid logo-desktop" alt="logo" />
                             <img src="//www.reidigital.com.br/pacs/assets/img/pacs-logo.png" class="img-fluid logo-mobile" alt="logo" />
                         </a>
@@ -81,18 +80,18 @@
                                 <!-- begin page title -->
                                 <div class="d-block d-lg-flex flex-nowrap align-items-center left">
                                     <div class="page-title mr-4 pr-4 border-right">
-                                        <h1>Cadastro de Clientes</h1>
+                                        <h1>Cadastro de Produtos</h1>
                                     </div>
                                     <div class="breadcrumb-bar align-items-center">
                                         <nav>
                                             <ol class="breadcrumb p-0 m-b-0">
                                                 <li class="breadcrumb-item">
-                                                    <a href="../index.php"><i class="ti ti-home"></i></a>
+                                                    <a href="index.html"><i class="ti ti-home"></i></a>
                                                 </li>
                                                 <li class="breadcrumb-item">
                                                     Dashboard
                                                 </li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Clientes</li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Produtos</li>
                                             </ol>
                                         </nav>
                                     </div>   
@@ -103,43 +102,29 @@
 						<div class="col-md-12">
                                 <div class="card card-statistics">                                   
                                     <div class="card-body">
-                                        <form>
+                                        <form action="gProduto.php" method="POST">
                                             <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputEmail4">Email</label>
-                                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputPassword4">Password</label>
-                                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputAddress">Address</label>
-                                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputAddress2">Address 2</label>
-                                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">City</label>
-                                                    <input type="text" class="form-control" id="inputCity">
+                                                <div class="form-group col-md-8">
+                                                    <label>Nome do Produto</label>
+                                                    <input type="text" name="nomeproduto" class="form-control" id="nomeproduto" >
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="inputState">State</label>
-                                                    <select id="inputState" class="form-control">
-                                                        <option selected="">Select State</option>
-                                                        <option>Ontario</option>
-                                                        <option>Toronto</option>
-                                                    </select>
+                                                    <label>Marca</label>
+                                                    <input type="text" name="marca" class="form-control" id="marca">
                                                 </div>
-                                                <div class="form-group col-md-2">
-                                                    <label for="inputZip">Zip</label>
-                                                    <input type="text" class="form-control" id="inputZip">
-                                                </div>
-                                            </div>                                           
+												<div class="form-group col-md-4">
+													<label>Valor Base</label>
+													<input type="text" name="valorbase" class="form-control" id="valorbase">
+												</div>
+												<div class="form-group col-md-4">
+													<label>Validade</label>
+													<input type="text" name="validade" class="form-control" id="validade">
+												</div>
+												<div class="form-group col-md-4">
+                                                    <label>Tempo de Uso no Cliente</label>
+                                                    <input type="text" name="tempodeusocliente" class="form-control" id="tempodeusocliente">
+                                                </div>                                                											
+                                            </div>                                                                                      
                                             <button type="submit" class="btn btn-primary">Salvar</button>
                                         </form>
                                     </div>

@@ -4,11 +4,10 @@
 <html lang="pt-br">
 
 <head>
-    <title><?= TITLE ?> - Cadastro de Funcionários</title>
+    <title><?= TITLE ?> - Cadastro de Administradores</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
-    <meta name="author" content="Potenza Global Solutions" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- app favicon -->
     <link rel="shortcut icon" href="<?= BASE_ICO ?>">
@@ -81,7 +80,7 @@
                                 <!-- begin page title -->
                                 <div class="d-block d-lg-flex flex-nowrap align-items-center left">
                                     <div class="page-title mr-4 pr-4 border-right">
-                                        <h1>Cadastro de Funcionários</h1>
+                                        <h1>Cadastro de Administradores</h1>
                                     </div>
                                     <div class="breadcrumb-bar align-items-center">
                                         <nav>
@@ -92,7 +91,7 @@
                                                 <li class="breadcrumb-item">
                                                     Dashboard
                                                 </li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Funcionários</li>
+                                                <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Administradores</li>
                                             </ol>
                                         </nav>
                                     </div>   
@@ -103,40 +102,32 @@
 						<div class="col-md-12">
                                 <div class="card card-statistics">                                   
                                     <div class="card-body">
-                                    <form action="gFuncionario.php" method="POST">
+                                        <form action="gAdministrador.php" method="POST">
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
                                                     <label>Nome Completo</label>
                                                     <input type="text" name="nomecompleto" class="form-control" id="nomecompleto" >
                                                 </div>
-                                                <div class="form-group col-md-4">
+                                                <div class="form-group col-md-3">
                                                     <label>Login</label>
                                                     <input type="text" name="login" class="form-control" id="login">
                                                 </div>
-												<div class="form-group col-md-2">
+												<div class="form-group col-md-3">
 													<label>Senha</label>
 													<input type="password" name="senha" class="form-control" id="senha">
 												</div>
-												<div class="form-group col-md-3">
-													<label>E-mail</label>
-													<input type="email" name="email" class="form-control" id="email">
-												</div>
-												<div class="form-group col-md-3">
-                                                    <label>CPF</label>
-                                                    <input type="text" name="cpf" class="form-control" id="cpf">
+												<div class="form-group col-md-6">
+                                                    <label>E-mail</label>
+                                                    <input type="email" name="email" class="form-control" id="email">
                                                 </div>
                                                 <div class="form-group col-md-3">
-                                                    <label>Função</label>
-                                                    <select type="text" name="funcao" class="form-control" id="funcao">                                                   
-                                                        <option value="todos">Escolha uma função</option> 
-                                                        <option value="recepcao"> Recepção </option>
-                                                        <option value="todos"> Outros </option>                                                   
-                                                    </select>
-                                                </div>
+                                                    <label>CPF</label>
+                                                    <input type="text" name="cpf" class="form-control" id="cpf">
+                                                </div>												
 												<div class="form-group col-md-3">
                                                     <label>Telefone</label>
                                                     <input type="text" name="telefone" class="form-control" id="telefone">
-                                                </div>												
+                                                </div>
                                             </div>                                                                                      
                                             <button type="submit" class="btn btn-primary">Salvar</button>
                                         </form>

@@ -9,8 +9,7 @@
 
             #guardando dentro de um array os names dos posts q n podem ficar em banco
             $post = array(
-                "nomecompleto", "login", "senha", "email", "cpf", "telefone", "cep", "logradouro", "numero",
-                "complemento", "bairro", "municipio", "estado"
+                "nomecompleto", "login", "senha", "email", "cpf", "funcao", "telefone"
             );
             //percorrendo array pra ver se está vazio
             foreach ($post as $key) { 
@@ -22,7 +21,7 @@
             }
             if(!$empty){ //n ta vazio:
                 #capturando dados do form de cadastro e protegendo contra SQL Injection
-                # 1 - n deixar repetir rg, cpf
+                # 1 - n deixar repetir cpf
                 
                 //NOME COMPLETO
                 $nome = filter_var($_POST["nomecompleto"], FILTER_SANITIZE_STRING); //Filtro pra SQL Injection
@@ -49,27 +48,20 @@
                 $telefone = str_replace('(', '', $telefone); //tratamento
                 $telefone = str_replace(')', '', $telefone); //tratamento
 
-                //ENDEREÇO
-                $logradouro = filter_var($_POST["logradouro"], FILTER_SANITIZE_STRING); 
-                $cep = filter_var($_POST["cep"], FILTER_SANITIZE_STRING);
-                $cep = str_replace("-","", $cep);
-                $numero = filter_var($_POST["numero"], FILTER_SANITIZE_NUMBER_INT);
-                $complemento = filter_var($_POST["complemento"], FILTER_SANITIZE_STRING);
-                $bairro = filter_var($_POST["bairro"], FILTER_SANITIZE_STRING);
-                $municipio = filter_var($_POST["municipio"], FILTER_SANITIZE_STRING);
-                $estado = filter_var($_POST["estado"], FILTER_SANITIZE_STRING);
+                //FUNÇÃO
+                $funcao = filter_var($_POST["funcao"], FILTER_SANITIZE_STRING); 
 
                 //VALIDANDO CADASTROS
-                $verCliente = "SELECT * FROM clientes WHERE cpf = '".$cpf."'";
-                $queryCliente = mysql_query($verCliente, $con);
-                $rowsCliente = mysql_num_rows($queryCliente);
+                $verFuncionario = "SELECT * FROM funcionarios WHERE cpf = '".$cpf."'";
+                $queryFuncionario = mysql_query($verFuncionario, $con);
+                $rowsFuncionarios = mysql_num_rows($queryFuncionario);
                 $verLogin = "SELECT * login WHERE login ='".$login." OR email = '".$email."'";
                 $queryLogin = mysql_query($verLogin, $con);
                 $rowsLogin = mysql_num_rows($queryLogin);
-                if(!$rowsCliente && !$rowsLogin){
-                    // realiza o insert do Cliente
-                    $sqlCliente = "
-                        INSERT INTO clientes (
+                if(!$rowsFuncionarios && !$rowsLogin){
+                    // realiza o insert do Funcionário
+                    $sqlFuncionario = "
+                        INSERT INTO funcionarios (
                             nomecompleto, cpf, telefone, email
                         ) VALUES(
                             '" . $nome . "',
@@ -79,85 +71,70 @@
                         )";
                     
                     //realiza insert do login
-                    if(mysql_query($sqlCliente, $con)){
-                        $idclientes = mysql_insert_id();
-                        
-                        //VALIDANDO ENDEREÇO
-                        $verEnd = "SELECT * FROM endereco WHERE idclientes = '".$idclientes."'";                       
-                        $end = mysql_query($verEnd, $con);
-                        if(!mysql_num_rows($end)){
-                            //pode cadastrar o endereço e login
-                            //pode inserir login
+                    if(mysql_query($sqlFuncionario, $con)){
+                        $idfuncionarios = mysql_insert_id();
+                            
+                            //LOGIN
                             $sqlLogin = "
                                 INSERT INTO login (
-                                    login, senha, status, idclientes
+                                    login, senha, status, idfuncionarios
                                 ) VALUES (
                                     '" . $login . "',
                                     '" . $password . "',
                                     'ativo',
-                                    '" . $idclientes . "'
+                                    '" . $idfuncionarios . "'
                                 )";
                             $queryLogin = mysql_query($sqlLogin, $con);
-                            //ENDEREÇO
-                            $sqlEnd = "
-                                INSERT INTO endereco (
-                                    cep, logradouro, bairro, municipio, estado, numerocasa, complemento, idclientes
+                            
+                            //FUNÇÃO
+                            $sqlFuncao = "
+                                INSERT INTO funcaofuncionario (
+                                    nomefuncao, idfuncionarios
                                 ) VALUES (
-                                    '" . $cep . "',
-                                    '" . $logradouro . "',
-                                    '" . $bairro . "',
-                                    '" . $municipio . "',
-                                    '" . $estado . "',
-                                    '" . $numero . "',
-                                    '" . $complemento . "',
-                                    '" . $idclientes . "'
+                                    '" . $funcao . "',
+                                    '" . $idfuncionarios . "'
                                 )";                               
                                 
-                            $queryEnd = mysql_query($sqlEnd, $con);
-                            if(!$queryLogin && !$queryEnd){
-                                //erro ao cadastrar login e endereço
-                                $msg = "Erro ao cadastrar login e endereço do Cliente. Por favor, entre em contato com o suporte do sistema!";
+                            $queryFuncao = mysql_query($sqlFuncao, $con);
+                            if(!$queryLogin && !$queryFuncao){
+                                //erro ao cadastrar login e função
+                                $msg = "Erro ao cadastrar login e função do Funcionário. Por favor, entre em contato com o suporte do sistema!";
                                 header("location:./inf?msg=" . $msg);
                                 
-                            } else if(!$queryLogin || !$queryEnd){
+                            } else if(!$queryLogin || !$queryFuncao){
                                 if(!$queryLogin){
                                     //erro ao cadastrar login
-                                    $msg = "Erro ao cadastrar login do Cliente. Por favor, entre em contato com o suporte do sistema!";
+                                    $msg = "Erro ao cadastrar login do Funcionário. Por favor, entre em contato com o suporte do sistema!";
                                     header("location:./inf?msg=" . $msg);
                                 } 
                                 
-                                if(!$queryEnd){
-                                    //erro ao cadastrar endereço
+                                if(!$queryFuncao){
+                                    //erro ao cadastrar função
                                     //$msg = mysql_error($con);
-                                    $msg = "Erro ao cadastrar endereço do Cliente. Por favor, entre em contato com o suporte do sistema!";
+                                    $msg = "Erro ao cadastrar função do Funcionário. Por favor, entre em contato com o suporte do sistema!";
                                     header("location:./inf?msg=" . $msg);
                                 }
                             } else {
-                                $msg = "Cliente cadastrado com sucesso!";
+                                $msg = "Funcionário cadastrado com sucesso!";
                                 header("location:./inf?msg=" . $msg);
                             }
-                        } else {
-                            //esse endereço já existe
-                            //informa que esse cadastro já existe
-                            flash("mensagem", "Esse endereço já existe no nosso sistema. Por favor, verifique nos cadastros!", "danger");
-                            header("location:cCliente");
-                        }
+
                     } else {
-                        //erro no cadastro do Cliente
+                        //erro no cadastro do funcionário
                         //$msg = mysql_error($con);
-                        $msg = "Erro ao cadastrar Cliente. Por favor, entre em contato com o suporte do sistema!";
+                        $msg = "Erro ao cadastrar Funcionário. Por favor, entre em contato com o suporte do sistema!";
                         header("location:./inf?msg=" . $msg);
                     }
                 
                 } else {
                     //informa que esse cadastro já existe
                     flash("mensagem", "Esse cadastro já existe no nosso sistema. Por favor, verifique nos cadastros!", "danger");
-                    header("location:cCliente");
+                    header("location:cFuncionario");
                 }                        
             } else{
                 //mensagem "n deixe nenhum campo em branco"
                 flash("mensagem", "Por favor, não deixe nenhum campo em branco", "danger");
-                header("location:cCliente");
+                header("location:cFuncionario");
             }                             
                   
         

@@ -81,7 +81,7 @@
                                 <!-- begin page title -->
                                 <div class="d-block d-lg-flex flex-nowrap align-items-center left">
                                     <div class="page-title mr-4 pr-4 border-right">
-                                        <h1>Cadastro de Clientes</h1>
+                                        <!-- <h1>Cadastro de Clientes</h1> -->
                                     </div>
                                     <div class="breadcrumb-bar align-items-center">
                                         <nav>
@@ -92,7 +92,7 @@
                                                 <li class="breadcrumb-item">
                                                     Dashboard
                                                 </li>
-                                                <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Clientes</li>
+                                                <!-- <li class="breadcrumb-item active text-primary" aria-current="page">Cadastro de Clientes</li> -->
                                             </ol>
                                         </nav>
                                     </div>   
